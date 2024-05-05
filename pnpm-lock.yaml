@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 devDependencies:
+  true-myth:
+    specifier: ^7.1.0
+    version: 7.1.0
   tsup:
     specifier: ^8.0.1
     version: 8.0.1
@@ -1032,6 +1035,11 @@ packages:
   /tree-kill@1.2.2:
     resolution: {integrity: sha512-L0Orpi8qGpRG//Nd+H90vFB+3iHnue1zSSGmNOOCh1GLJ7rUKVwV2HvijphGQS2UmhUZewS9VgvxYIdgr+fG1A==}
     hasBin: true
+    dev: true
+
+  /true-myth@7.1.0:
+    resolution: {integrity: sha512-DcdyFRHfNyG31HgNtxqrVAHmBf7y1w4YZCpU7IR2Ohytm4LITv+u075Vc3dLyK9cdEPq6K9398iao6YpkU8hHA==}
+    engines: {node: 18.* || >= 20.*}
     dev: true
 
   /ts-interface-checker@0.1.13:

@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "true-myth": "^7.1.0",
     "tsup": "^8.0.1"
   }
 }
