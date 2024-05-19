@@ -1,0 +1,45 @@
+name: Workflow name
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - release
+
+jobs:
+  job-name:
+    environment: release
+    name: Job name
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
+      - uses: a7ul/tar-action@v1.1.0
+        with:
+          command: c
+          files: |
+            captain-definition
+            Dockerfile
+            ... Build folder & others
+          outPath: deploy.tar
+
+      - name: Deploy App to CapRover
+        uses: caprover/deploy-from-github@v1.1.2
+        with:
+          server: '${{ secrets.CAPROVER_SERVER }}'
+          app: '${{ secrets.WEB_APP_NAME }}'
+          token: '${{ secrets.WEB_APP_TOKEN }}'

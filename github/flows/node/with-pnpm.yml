@@ -1,0 +1,50 @@
+name: Workflow name
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - release
+
+jobs:
+  job-name:
+    environment: release
+    name: Job name
+    runs-on: ubuntu-22.04
+    strategy:
+      node-version: [20]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+        version: 9
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - uses: a7ul/tar-action@v1.1.0
+        with:
+          command: c
+          files: |
+            captain-definition
+            Dockerfile
+            ... The rest of the files to ship
+          outPath: deploy.tar
+
+      - name: Deploy App to CapRover
+        uses: caprover/deploy-from-github@v1.1.2
+        with:
+          server: '${{ secrets.CAPROVER_SERVER }}'
+          app: '${{ secrets.WEB_APP_NAME }}'
+          token: '${{ secrets.WEB_APP_TOKEN }}'
